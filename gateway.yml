@@ -5,46 +5,26 @@ spring:
         locator:
           enabled: true
       routes:
-      - id: serviceBooks
-        uri: lb://service-Books
-        predicates:
-        - Path=/books/**
-        filters:
-        - RewritePath=/books/(?<segment>.*), /$\{segment}
-        - name: Hystrix
-          args:
-            name: monitor-books
-            fallbackUri: forward:/fallback/serviceBooks
-      - id: serviceA
-        uri: lb://service-A
+      - id: orders
+        uri: lb://orders
         predicates:
         - Path=/srva/**
         filters:
-        - RewritePath=/srva/(?<segment>.*), /$\{segment}
+        - RewritePath=/orders/(?<segment>.*), /$\{segment}
         - name: Hystrix
           args:
-            name: monitor-srvA
-            fallbackUri: forward:/fallback/serviceA
-      - id: ServiceB
-        uri: lb://service-B
+            name: monitor-orders
+            fallbackUri: forward:/fallback/orders
+      - id: items
+        uri: lb:/items
         predicates:
         - Path=/srvb/**
         filters:
-        - RewritePath=/srvb/(?<segment>.*), /$\{segment}
+        - RewritePath=/items/(?<segment>.*), /$\{segment}
         - name: Hystrix
           args:
-            name: monitor-srvB
-            fallbackUri: forward:/fallback/serviceB  
-      - id: ServiceWeather
-        uri: lb://service-Weather
-        predicates:
-        - Path=/weather/**
-        filters:
-        - RewritePath=/weather/(?<segment>.*), /$\{segment}
-        - name: Hystrix
-          args:
-            name: monitor-weather
-            fallbackUri: forward:/fallback/serviceWeather  
+            name: monitor-items
+            fallbackUri: forward:/fallback/items  
       - id: MQActivityService
         uri: lb://activity
         predicates:
